@@ -35,7 +35,10 @@
                     Click="CloseApp"
                     Header="Close the app"
                     Icon="{icons:MaterialIconExt Kind=Close}" />
-                <MenuItem Header="Open github source" Icon="{icons:MaterialIconExt Kind=Github}" />
+                <MenuItem
+                    Command="{Binding OpenGithubSourceCommand}"
+                    Header="Open github source"
+                    Icon="{icons:MaterialIconExt Kind=Github}" />
             </MenuItem>
             <MenuItem Header="Themes" Icon="{icons:MaterialIconExt Kind=Theme}" />
         </Menu>

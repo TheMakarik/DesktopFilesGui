@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -17,7 +18,8 @@ namespace DesktopFilesGui;
 
 public partial class App : Application
 {
-   
+    private ServiceProvider _provider;
+    
     public override void Initialize()
     {
         ConfigureSerilog();
@@ -32,10 +34,10 @@ public partial class App : Application
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainWindowViewModel(),
-            };
+            var window = _provider.GetRequiredService<MainWindow>();
+            window.DataContext = _provider.GetRequiredService<MainWindowViewModel>();
+    
+            desktop.MainWindow = window;
         }
 
         base.OnFrameworkInitializationCompleted();
@@ -47,8 +49,12 @@ public partial class App : Application
         
         services
             .AddSingleton<IDesktopFileGenerator, DesktopFileGenerator>()
+            .AddSingleton<IGithubSourceOpener, GithubSourceOpener>()
+            .AddSingleton(Log.Logger)
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<MainWindow>();
+        
+        _provider = services.BuildServiceProvider();
     }
     
     private void ConfigureSerilog()
@@ -61,6 +67,7 @@ public partial class App : Application
                 path: Path.Combine(Configuration.APPLICATION_DATA, "logs"))
             .Enrich.WithThreadId()
             .CreateLogger();
+        
     }
 
     private void DisableAvaloniaDataAnnotationValidation()

@@ -2,14 +2,16 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DesktopFilesGui.Models;
 using DesktopFilesGui.Models.Enums;
+using DesktopFilesGui.Services.Interfaces;
 
 namespace DesktopFilesGui.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel(IGithubSourceOpener githubSourceOpener) : ViewModelBase
 {
     [ObservableProperty] private bool _isCodePopupVisible = false;
     [ObservableProperty] private string? _fileName;
@@ -50,6 +52,12 @@ public partial class MainWindowViewModel : ViewModelBase
     private void AddMimeType()
     {
         SupportedMimeTypes.Add("application/json");
+    }
+
+    [RelayCommand]
+    private void OpenGithubSource()
+    {
+        Task.Run(githubSourceOpener.Open);
     }
     
     
