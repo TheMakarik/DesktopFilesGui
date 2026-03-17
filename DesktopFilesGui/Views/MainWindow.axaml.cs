@@ -1,8 +1,10 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using AvaloniaEdit;
 using AvaloniaEdit.Editing;
 using AvaloniaEdit.TextMate;
+using DesktopFilesGui.Models.Enums;
 using TextMateSharp.Grammars;
 
 namespace DesktopFilesGui.Views;
@@ -34,5 +36,15 @@ Terminal=False
     private void CloseApp(object? sender, RoutedEventArgs e)
     {
         this.Close();
+    }
+
+    private void LoadItems(object? sender, RoutedEventArgs e)
+    {
+        var combobox = (ComboBox)sender;
+
+        foreach (var value in Enum.GetValues<DesktopFileType>())
+        {
+            combobox.Items.Add(value);
+        }
     }
 }

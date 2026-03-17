@@ -6,6 +6,8 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using DesktopFilesGui.Services;
+using DesktopFilesGui.Services.Interfaces;
 using DesktopFilesGui.ViewModels;
 using DesktopFilesGui.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +46,7 @@ public partial class App : Application
         var services = new ServiceCollection();
         
         services
+            .AddSingleton<IDesktopFileGenerator, DesktopFileGenerator>()
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<MainWindow>();
     }
