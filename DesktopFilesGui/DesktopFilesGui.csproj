@@ -96,4 +96,8 @@
     <ItemGroup>
       <Folder Include="Behaviors\" />
     </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="desktop.xml" />
+    </ItemGroup>
 </Project>

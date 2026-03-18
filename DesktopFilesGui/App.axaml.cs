@@ -28,7 +28,7 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
     
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -41,6 +41,9 @@ public partial class App : Application
             desktop.MainWindow = window;
         }
 
+        await _provider.GetRequiredService<IExecutionTriggersJsonCreator>()
+            .CreateIfNotExistsAsync();
+        
         base.OnFrameworkInitializationCompleted();
     }
     
@@ -52,6 +55,7 @@ public partial class App : Application
             .AddSingleton<IDesktopFileGenerator, DesktopFileGenerator>()
             .AddSingleton<IGithubSourceOpener, GithubSourceOpener>()
             .AddSingleton(Log.Logger)
+            .AddTransient<IExecutionTriggersJsonCreator, ExecutionTriggersJsonCreator>()
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<MainWindow>();
         

@@ -14,5 +14,5 @@ public sealed class DesktopFile
     public bool RunFromDBus { get; set; }
     public bool StartupNotifySupport { get; set; }
     public bool UseCustomExecCommand { get; set; }
-    public IEnumerable<string> SupportedMimeTypes { get; set; }
+    public IEnumerable<string> SupportedMimeTypes { get; set; } = [];
 }

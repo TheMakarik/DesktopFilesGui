@@ -21,7 +21,34 @@ public static class Configuration
     public const string PATH_IN_EXEC_COMMAND = "{PATH}";
     public const string STARTUP_NOTIFY_KEY = "StartupNotify";
     public const string MIME_TYPE_KEY = "MimeType";
-    
+    public static readonly string EXECUTION_TEMPLATES_JSON_PATH = $"{APPLICATION_DATA}/triggers.json";
+
+    public static readonly TemplatesInfo DEFAULT_TEMPLATES_INFO = new()
+    {
+        ExecutionTemplatesCollection =
+        [
+            new ExecutionTemplates()
+            {
+                Template = "*.sh",
+                Exec = $"sh {PATH_IN_EXEC_COMMAND}"
+            },
+            new ExecutionTemplates()
+            {
+                 Template = "*.bash",
+                 Exec = $"bash {PATH_IN_EXEC_COMMAND}"
+            },
+            new ExecutionTemplates()
+            {
+                Template = "*.run",
+                Exec = $"{PATH_IN_EXEC_COMMAND}"
+            },
+            new ExecutionTemplates()
+            {
+                Template = "*.AppImage",
+                Exec = $"{PATH_IN_EXEC_COMMAND}"
+            },
+        ]
+    };
     
     public const string DESKTOP_FILE_STARTING = @$"
 # This .desktop file powered by {nameof(DesktopFilesGui)}
@@ -30,20 +57,20 @@ public static class Configuration
 
 [Desktop Entry]";
     
-    public static List<CountryInfo> Countries { get; } = new()
-    {
-        new CountryInfo { IconPath = "/Assets/Flags/USA.png", Key = "us" },
-        new CountryInfo { IconPath = "/Assets/Flags/brazil.png", Key = "br" },
-        new CountryInfo { IconPath = "/Assets/Flags/canada.png", Key = "ca" },
-        new CountryInfo { IconPath = "/Assets/Flags/china.png", Key = "cn" },
-        new CountryInfo { IconPath = "/Assets/Flags/france.png", Key = "fr" },
-        new CountryInfo { IconPath = "/Assets/Flags/germany.png", Key = "de" },
-        new CountryInfo { IconPath = "/Assets/Flags/japan.png", Key = "jp" },
-        new CountryInfo { IconPath = "/Assets/Flags/norway.png", Key = "no" },
-        new CountryInfo { IconPath = "/Assets/Flags/russia.png", Key = "ru" },
-        new CountryInfo { IconPath = "/Assets/Flags/uk.png", Key = "gb" },
-        new CountryInfo { IconPath = "/Assets/Flags/ireland (1).png", Key = "ie" },
-        new CountryInfo { IconPath = "/Assets/Flags/italy.png", Key = "it" },
-        new CountryInfo { IconPath = "/Assets/Flags/korea.png", Key = "kr" }
-    };
+    public static List<CountryInfo> Countries { get; } =
+    [
+        new() { IconPath = "/Assets/Flags/USA.png", Key = "us" },
+        new() { IconPath = "/Assets/Flags/brazil.png", Key = "br" },
+        new() { IconPath = "/Assets/Flags/canada.png", Key = "ca" },
+        new() { IconPath = "/Assets/Flags/china.png", Key = "cn" },
+        new() { IconPath = "/Assets/Flags/france.png", Key = "fr" },
+        new() { IconPath = "/Assets/Flags/germany.png", Key = "de" },
+        new() { IconPath = "/Assets/Flags/japan.png", Key = "jp" },
+        new() { IconPath = "/Assets/Flags/norway.png", Key = "no" },
+        new() { IconPath = "/Assets/Flags/russia.png", Key = "ru" },
+        new() { IconPath = "/Assets/Flags/uk.png", Key = "gb" },
+        new() { IconPath = "/Assets/Flags/ireland (1).png", Key = "ie" },
+        new() { IconPath = "/Assets/Flags/italy.png", Key = "it" },
+        new() { IconPath = "/Assets/Flags/korea.png", Key = "kr" }
+    ];
 }
