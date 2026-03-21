@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,36 +16,36 @@ using Serilog;
 
 namespace DesktopFilesGui.ViewModels;
 
-public partial class MainWindowViewModel(
-    ILogger logger,
-    IGithubSourceOpener githubSourceOpener, 
-    IDesktopFileGenerator desktopFileGenerator) : ViewModelBase
+public partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private bool _isCodePopupVisible = false;
     
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [FileNotExists(directoryProperty: nameof(PathToOutput), extension: ".desktop")]
+    [Required(ErrorMessage =  "This parameter is required")]
     private string? _fileName;
     
     [ObservableProperty] private string? _applicationName;
     [ObservableProperty] private bool _enableLocalization;
-    [ObservableProperty] private DesktopFileType _selectedFileType = Configuration.DEFAULT_DESKTOP_FILE_TYPE;
+    [ObservableProperty] private DesktopFileType _selectedFileType = StaticConfiguration.DEFAULT_DESKTOP_FILE_TYPE;
 
     [ObservableProperty] 
     [FileExists] 
     [NotifyDataErrorInfo]
+    [Required(ErrorMessage =  "This parameter is required")]
     private string? _pathToRunFile;
    
     [ObservableProperty]
-    [FileExists]
+    [FileExists(requiredNotBeEmpty: false)]
     [NotifyDataErrorInfo] 
     private string? _pathToIcon;
     
     [ObservableProperty]
     [DirectoryExists]
     [NotifyDataErrorInfo]
-    private string? _pathToOutput = Configuration.DEFAULT_DESKTOP_FILE_PATH;
+    [Required(ErrorMessage =  "This parameter is required")]
+    private string? _pathToOutput = StaticConfiguration.DEFAULT_DESKTOP_FILE_PATH;
    
     [ObservableProperty] private bool _showTerminal;           
     [ObservableProperty] private bool _requireSudo;            
@@ -52,23 +53,55 @@ public partial class MainWindowViewModel(
     [ObservableProperty] private bool _isHidden;             
     [ObservableProperty] private bool _runFromDBus;           
     [ObservableProperty] private bool _startupNotifySupport;   
-    [ObservableProperty] private bool _useCustomExecCommand;      
+    [ObservableProperty] private bool _useCustomExecCommand;
+    
+    [ObservableProperty] 
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage =  "This parameter is required")]
+    [Url(ErrorMessage = "This string must be a URL Address")]
+    private string _url = string.Empty;
+    
     [ObservableProperty] private ObservableCollection<StringViewModel> _supportedMimeTypes = new();
     [ObservableProperty] private string _code = string.Empty;
+    
+    [ObservableProperty] private bool _forceCreateDesktopFile = false;
+
+    [ObservableProperty] private bool _canCreateDesktopFile;
 
     private bool _mustUpdateDesktopFile = true;
     private DesktopFile? _desktopFile;
     private SemaphoreSlim semaphoreSlim = new(1, 1);
+    private readonly ILogger _logger;
+    private readonly IGithubSourceOpener _githubSourceOpener;
+    private readonly IDesktopFileSerializer _desktopFileSerializer;
+    
+    
+    public MainWindowViewModel(ILogger logger,
+        IGithubSourceOpener githubSourceOpener, 
+        IDesktopFileSerializer desktopFileSerializer)
+    {
+        _logger = logger;
+        _githubSourceOpener = githubSourceOpener;
+        _desktopFileSerializer = desktopFileSerializer;
+
+        this.ValidateAllProperties();
+    }
 
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         _mustUpdateDesktopFile = true;
+        if (e.PropertyName != nameof(CanCreateDesktopFile))
+        {
+            CanCreateDesktopFile = !HasErrors || ForceCreateDesktopFile;
+        }
+           
         base.OnPropertyChanged(e);
     }
 
     [RelayCommand]
     private async Task ChangeCodePopupVisibilityAsync()
     {
+        
         if (!IsCodePopupVisible && _mustUpdateDesktopFile)
         {
             await semaphoreSlim.WaitAsync();
@@ -88,7 +121,7 @@ public partial class MainWindowViewModel(
     [RelayCommand]
     private void AddMimeType()
     {
-        logger.Debug("Adding empty mime type");
+        _logger.Debug("Adding empty mime type");
         SupportedMimeTypes.Add(new StringViewModel()
         {
             Value = null,
@@ -99,15 +132,21 @@ public partial class MainWindowViewModel(
     [RelayCommand]
     private void OpenGithubSource()
     {
-        Task.Run(githubSourceOpener.Open);
+        Task.Run(_githubSourceOpener.Open);
     }
     
     
     [RelayCommand]
     private void ClearMimeTypes()
     {
-        logger.Debug("Clearing mime types");
+        _logger.Debug("Clearing mime types");
         SupportedMimeTypes.Clear();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanCreateDesktopFile))]
+    private async Task CreateDesktopFileAsync()
+    {
+        
     }
     
     private async Task UpdateDesktopFileAsync()
@@ -118,12 +157,11 @@ public partial class MainWindowViewModel(
             Type = SelectedFileType,
             ShowTerminal = ShowTerminal,
             RequireSudo = RequireSudo,
-            DisplayInMenu = DisplayInMenu,
+            HiddenInMenu = !DisplayInMenu,
             EnableLocalization = EnableLocalization,
             IsHidden = IsHidden,
             RunFromDBus = RunFromDBus,
             StartupNotifySupport = StartupNotifySupport,
-            UseCustomExecCommand = UseCustomExecCommand,
             SupportedMimeTypes = SupportedMimeTypes
                 .Where(stringViewModel => stringViewModel.Value is not null)
                 .Select(stringViewModel => stringViewModel.Value)
@@ -131,7 +169,7 @@ public partial class MainWindowViewModel(
         };
         await Task.Run(async () =>
         {
-            var result = desktopFileGenerator.Generate(_desktopFile);
+            var result = _desktopFileSerializer.Serialize(_desktopFile);
             await Dispatcher.UIThread.InvokeAsync(() => Code = result);
         });
     }

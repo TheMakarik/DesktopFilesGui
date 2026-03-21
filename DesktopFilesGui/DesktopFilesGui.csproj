@@ -93,6 +93,7 @@
         <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+        <PackageReference Include="ThemeEditor.Controls.ColorPicker" Version="11.3.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -116,10 +117,6 @@
         <AvaloniaResource Include="Assets\Flags\italy.png">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </AvaloniaResource>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Behaviors\" />
     </ItemGroup>
 
     <ItemGroup>

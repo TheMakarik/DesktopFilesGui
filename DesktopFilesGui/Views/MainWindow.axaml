@@ -28,7 +28,10 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <Menu Grid.Row="0">
             <MenuItem Header="Open" Name="OpenMenuItem">
-                <MenuItem Header="Open desktop files in 'Files'" Icon="{icons:MaterialIconExt Kind=Files}" />
+                <MenuItem
+                    Click="OpenDesktopFiles"
+                    Header="Open desktop files in 'Files'"
+                    Icon="{icons:MaterialIconExt Kind=Files}" />
                 <MenuItem Header="Show list of the desktop file" Icon="{icons:MaterialIconExt Kind=ListBox}" />
                 <MenuItem Header="Open desktop file" Icon="{icons:MaterialIconExt Kind=OpenInApp}" />
             </MenuItem>
@@ -42,7 +45,10 @@
                     Header="Open github source"
                     Icon="{icons:MaterialIconExt Kind=Github}" />
             </MenuItem>
-            <MenuItem Header="Themes" Icon="{icons:MaterialIconExt Kind=Theme}" />
+            <MenuItem
+                Click="OpenThemes"
+                Header="Themes"
+                Icon="{icons:MaterialIconExt Kind=Theme}" />
         </Menu>
 
         <ScrollViewer Grid.Row="1" Margin="5,0,0,0">
@@ -95,6 +101,17 @@
                         Width="{StaticResource ButtonSize}" />
                 </StackPanel>
 
+                <StackPanel IsVisible="{Binding SelectedFileType, Converter={converters:DesktopFileTypeToBooleanConverter}, ConverterParameter='{x:Static modelEnums:DesktopFileType.Link}'}" Orientation="Horizontal">
+                    <icons:MaterialIcon
+                        Kind="LinkAdd"
+                        Margin="5,0,10,0"
+                        Width="{StaticResource IconWidth}" />
+                    <TextBox
+                        Text="{Binding Url}"
+                        Watermark="URL"
+                        Width="{StaticResource TextBoxWidth}" />
+                </StackPanel>
+
 
                 <StackPanel Orientation="Horizontal">
                     <icons:MaterialIcon
@@ -119,6 +136,7 @@
                 <controls:CheckBoxWithHelp
                     Content="Show terminal"
                     IsChecked="{Binding ShowTerminal}"
+                    IsEnabled="{Binding SelectedFileType, Converter={converters:DesktopFileTypeToBooleanConverter}, ConverterParameter='{x:Static modelEnums:DesktopFileType.Application}'}"
                     ToolTip="Allows terminal to appear after application start" />
                 <controls:CheckBoxWithHelp
                     Content="Require sudo"
@@ -158,7 +176,6 @@
 
                 <StackPanel Orientation="Horizontal">
                     <icons:MaterialIcon
-                        IsEnabled="{Binding SelectedFileType, ConverterParameter='Application', Converter={converters:DesktopFileTypeToBooleanConverter}}"
                         Kind="FolderSearch"
                         Margin="5,0,10,0"
                         Width="{StaticResource IconWidth}" />
@@ -167,9 +184,9 @@
                         Watermark="Path to .desktop file"
                         Width="{StaticResource TextBoxWidth}" />
                     <Button
+                        Click="SelectDirectory"
                         Content="{icons:MaterialIconExt Kind=Search}"
                         Height="{StaticResource ButtonSize}"
-                        IsEnabled="{Binding SelectedFileType, ConverterParameter='Application', Converter={converters:DesktopFileTypeToBooleanConverter}}"
                         Margin="5,0,10,0"
                         Width="{StaticResource ButtonSize}" />
                 </StackPanel>
@@ -191,6 +208,12 @@
                     Content="Startup notify support"
                     IsChecked="{Binding StartupNotifySupport}"
                     ToolTip="Mark that application support startup notifications" />
+
+                <controls:CheckBoxWithHelp
+                    Content="Create anyway"
+                    IsChecked="{Binding ForceCreateDesktopFile}"
+                    ToolTip="Allows user create desktop file ignoring validation rules" />
+
 
                 <controls:CheckBoxWithHelp
                     Content="Custom 'exec' command"
@@ -254,19 +277,31 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Grid Grid.Row="2" RowDefinitions="*,Auto">
+        <Grid ColumnDefinitions="Auto,*" Grid.Row="2">
+            <Button
+                Classes="outline"
+                Command="{Binding CreateDesktopFileCommand}"
+                Grid.Column="0"
+                Height="40"
+                IsEnabled="{Binding CanCreateDesktopFile, Mode=OneWay}"
+                Margin="20,10,30,10">
+                <StackPanel Orientation="Horizontal">
+                    <icons:MaterialIcon Kind="PlusOutline" />
+                    <Label Content="Create desktop file" />
+                </StackPanel>
+            </Button>
             <Button
                 Command="{Binding ChangeCodePopupVisibilityCommand}"
                 Content="{icons:MaterialIconExt Kind=Code}"
                 CornerRadius="30"
-                Grid.Row="1"
+                Grid.Column="1"
                 Height="{StaticResource ButtonSize}"
                 HorizontalAlignment="Right"
                 Margin="15"
                 Width="{StaticResource ButtonSize}"
                 x:Name="CodeButton" />
             <Popup
-                Grid.Row="1"
+                Grid.Column="1"
                 Height="300"
                 IsLightDismissEnabled="True"
                 IsOpen="{Binding IsCodePopupVisible}"

@@ -82,4 +82,19 @@ public partial class MainWindow : Window
         
         return textBox;
     }
+
+    private void OpenThemes(object? sender, RoutedEventArgs e)
+    {
+        var themeView = new ThemeView();
+        themeView.ShowDialog(this);
+    }
+
+    private async void OpenDesktopFiles(object? sender, RoutedEventArgs e)
+    {
+        var topLevel = GetTopLevel(this);
+
+        if(topLevel is null)
+            throw new InvalidOperationException("Could not find TopLevel");
+        
+    }
 }

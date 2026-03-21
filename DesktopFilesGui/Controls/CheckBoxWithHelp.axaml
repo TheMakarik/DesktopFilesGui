@@ -13,7 +13,8 @@
             Classes="outline"
             Content="{icons:MaterialIconExt Kind=QuestionMark}"
             Margin="20,10,0,0"
-            ToolTip.Placement="RightEdgeAlignedTop"
+            Name="ClickButton"
             ToolTip.Tip="{Binding ToolTip, ElementName=RootControl}" />
+
     </StackPanel>
 </UserControl>

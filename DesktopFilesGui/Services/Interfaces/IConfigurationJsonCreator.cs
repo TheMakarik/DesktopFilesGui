@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace DesktopFilesGui.Services.Interfaces;
 
-public interface IExecutionTriggersJsonCreator
+public interface IConfigurationJsonCreator
 {
     public ValueTask EnsureCreatedAsync();
 }

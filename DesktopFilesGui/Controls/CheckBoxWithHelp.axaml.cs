@@ -1,7 +1,11 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 
 namespace DesktopFilesGui.Controls;
 
@@ -15,7 +19,7 @@ public partial class CheckBoxWithHelp : UserControl
     
     public static readonly StyledProperty<bool> IsCheckedProperty =
         AvaloniaProperty.Register<CheckBoxWithHelp, bool>(nameof(IsChecked), defaultBindingMode: BindingMode.TwoWay);
-
+    
     public new string Content
     {
         get => GetValue(ContentProperty);
@@ -43,4 +47,5 @@ public partial class CheckBoxWithHelp : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
+
 }

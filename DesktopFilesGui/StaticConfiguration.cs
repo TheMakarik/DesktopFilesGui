@@ -6,7 +6,7 @@ using DesktopFilesGui.Models.Enums;
 
 namespace DesktopFilesGui;
 
-public static class Configuration
+public static class StaticConfiguration
 {
     public const string SERILOG_OUTPUT_TEMPLATE = "[{Timestamp:HH:mm:ss} {Level}] [Thread: {ThreadId}] {Message:lj}{NewLine}{Exception}";
     public static readonly string APPLICATION_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DesktopFilesGui");
@@ -14,15 +14,8 @@ public static class Configuration
     public const string DEFAULT_DESKTOP_FILE_PATH = "/usr/share/applications";
     
     public const DesktopFileType DEFAULT_DESKTOP_FILE_TYPE = DesktopFileType.Application;
-    public const string TYPE_KEY = "Type";
-    public const string TERMINAL_KEY = "Terminal";
-    public const string NO_DISPLAY_KEY = "NoDisplay";
-    public const string HIDDEN_KEY = "Hidden";
-    public const string DBUS_ACTIVATABLE_KEY = "DBusActivatable";
     public const string PATH_IN_EXEC_COMMAND = "{PATH}";
-    public const string STARTUP_NOTIFY_KEY = "StartupNotify";
-    public const string MIME_TYPE_KEY = "MimeType";
-    public static readonly string EXECUTION_TEMPLATES_JSON_PATH = $"{APPLICATION_DATA}/templates.json";
+    public static readonly string CONFIGURATION_JSON_PATH = $"{APPLICATION_DATA}/config.json";
 
     public static readonly TemplatesInfo DEFAULT_TEMPLATES_INFO = new()
     {
@@ -58,20 +51,4 @@ public static class Configuration
 
 [Desktop Entry]";
     
-    public static List<CountryInfo> Countries { get; } =
-    [
-        new() { IconPath = "/Assets/Flags/USA.png", Key = "us" },
-        new() { IconPath = "/Assets/Flags/brazil.png", Key = "br" },
-        new() { IconPath = "/Assets/Flags/canada.png", Key = "ca" },
-        new() { IconPath = "/Assets/Flags/china.png", Key = "cn" },
-        new() { IconPath = "/Assets/Flags/france.png", Key = "fr" },
-        new() { IconPath = "/Assets/Flags/germany.png", Key = "de" },
-        new() { IconPath = "/Assets/Flags/japan.png", Key = "jp" },
-        new() { IconPath = "/Assets/Flags/norway.png", Key = "no" },
-        new() { IconPath = "/Assets/Flags/russia.png", Key = "ru" },
-        new() { IconPath = "/Assets/Flags/uk.png", Key = "gb" },
-        new() { IconPath = "/Assets/Flags/ireland (1).png", Key = "ie" },
-        new() { IconPath = "/Assets/Flags/italy.png", Key = "it" },
-        new() { IconPath = "/Assets/Flags/korea.png", Key = "kr" }
-    ];
 }

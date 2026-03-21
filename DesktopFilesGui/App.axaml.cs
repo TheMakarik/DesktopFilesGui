@@ -41,7 +41,7 @@ public partial class App : Application
             desktop.MainWindow = window;
         }
 
-        await _provider.GetRequiredService<IExecutionTriggersJsonCreator>()
+        await _provider.GetRequiredService<IConfigurationJsonCreator>()
             .EnsureCreatedAsync();
         
         base.OnFrameworkInitializationCompleted();
@@ -52,10 +52,10 @@ public partial class App : Application
         var services = new ServiceCollection();
         
         services
-            .AddSingleton<IDesktopFileGenerator, DesktopFileGenerator>()
+            .AddSingleton<IDesktopFileSerializer, DesktopFileSerializer>()
             .AddSingleton<IGithubSourceOpener, GithubSourceOpener>()
             .AddSingleton(Log.Logger)
-            .AddTransient<IExecutionTriggersJsonCreator, ExecutionTriggersJsonCreator>()
+            .AddTransient<IConfigurationJsonCreator, ConfigurationJsonCreator>()
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<MainWindow>();
         
@@ -67,11 +67,11 @@ public partial class App : Application
     {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
-            .WriteTo.Console(outputTemplate: Configuration.SERILOG_OUTPUT_TEMPLATE)
+            .WriteTo.Console(outputTemplate: StaticConfiguration.SERILOG_OUTPUT_TEMPLATE)
             .WriteTo.File(
-                outputTemplate:  Configuration.SERILOG_OUTPUT_TEMPLATE, 
+                outputTemplate:  StaticConfiguration.SERILOG_OUTPUT_TEMPLATE, 
                 rollingInterval: RollingInterval.Day, 
-                path: Path.Combine(Configuration.APPLICATION_DATA, "logs"))
+                path: Path.Combine(StaticConfiguration.APPLICATION_DATA, "logs"))
             .Enrich.WithThreadId()
             .CreateLogger();
         
