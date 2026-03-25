@@ -22,8 +22,8 @@ public sealed class ConfigurationJsonCreator(ILogger logger) : IConfigurationJso
         await using var stream = File.Create(StaticConfiguration.CONFIGURATION_JSON_PATH);
         await JsonSerializer.SerializeAsync(
             stream, 
-            StaticConfiguration.DEFAULT_TEMPLATES_INFO,
-            TemplatesInfoSerializerOptions.Default.Options);
+            StaticConfiguration.DEFAULT_CONFIGURATION,
+            ConfigurationSerializerOptions.Default.Options);
         logger.Information("{path} was created", StaticConfiguration.CONFIGURATION_JSON_PATH);
     }
 }

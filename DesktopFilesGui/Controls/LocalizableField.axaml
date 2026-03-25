@@ -20,6 +20,7 @@
 
         <StackPanel IsVisible="{Binding EnableLocalization, ElementName=RootControl}" Orientation="Horizontal">
             <ComboBox
+                Classes="S"
                 Height="30"
                 ItemsSource="{StaticResource Countries}"
                 Width="70"
@@ -37,7 +38,10 @@
 
                 <ComboBox.ItemTemplate>
                     <DataTemplate DataType="models:CountryInfo">
-                        <StackPanel Orientation="Horizontal" Width="500">
+                        <StackPanel
+                            Loaded="Control_OnLoaded"
+                            Orientation="Horizontal"
+                            Width="500">
                             <Image
                                 Height="30"
                                 Margin="5,0,10,0"

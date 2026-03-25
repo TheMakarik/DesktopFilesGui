@@ -13,53 +13,38 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <StackPanel>
-        <TextBlock
-            Margin="20,20,0,0"
-            FontWeight="Bold"
-            Text="Theme settings" />
-        <Separator></Separator>
+        <StackPanel.Styles>
+            <Style Selector="ColorPicker">
+                <Setter Property="IsAccentColorsVisible" Value="True" />
+                <Setter Property="IsAlphaVisible" Value="False" />
+                <Setter Property="IsColorComponentsVisible" Value="False" />
+                <Setter Property="IsColorModelVisible" Value="True" />
+                <Setter Property="IsColorPaletteVisible" Value="True" />
+                <Setter Property="IsColorSpectrumSliderVisible" Value="True" />
+                <Setter Property="IsColorSpectrumVisible" Value="True" />
+                <Setter Property="IsComponentSliderVisible" Value="False" />
+                <Setter Property="IsComponentTextInputVisible" Value="False" />
+                <Setter Property="IsHexInputVisible" Value="False" />
+                <Setter Property="Margin" Value="20,13,0,0" />
+                <Setter Property="Palette">
+                    <Setter.Value>
+                        <MaterialHalfColorPalette />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style Selector="TextBlock">
+                <Setter Property="Margin" Value="20,20,0,0" />
+            </Style>
+        </StackPanel.Styles>
+        <TextBlock FontWeight="Bold" Text="Theme settings" />
+        <Separator />
         <StackPanel Orientation="Horizontal">
-            <TextBlock
-                Margin="20,20,0,0"
-                Name="PrimaryColor"
-                Text="Primary color" />
-            <ColorPicker
-                IsAccentColorsVisible="True"
-                IsAlphaVisible="False"
-                IsColorComponentsVisible="False"
-                IsColorModelVisible="False"
-                IsColorPaletteVisible="True"
-                IsColorSpectrumSliderVisible="True"
-                IsColorSpectrumVisible="False"
-                IsComponentSliderVisible="False"
-                IsComponentTextInputVisible="False"
-                IsHexInputVisible="False"
-                Margin="20,13,0,0">
-                <ColorPicker.Palette>
-                    <MaterialHalfColorPalette />
-                </ColorPicker.Palette>
-            </ColorPicker>
+            <TextBlock Name="PrimaryColor" Text="Primary color" />
+            <ColorPicker />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock
-                Margin="20,20,0,0"
-                Text="Secondary color" />
-            <ColorPicker
-                IsAccentColorsVisible="True"
-                IsAlphaVisible="False"
-                IsColorComponentsVisible="False"
-                IsColorModelVisible="False"
-                IsColorPaletteVisible="True"
-                IsColorSpectrumSliderVisible="True"
-                IsColorSpectrumVisible="False"
-                IsComponentSliderVisible="False"
-                IsComponentTextInputVisible="False"
-                IsHexInputVisible="False"
-                Margin="20,13,0,0">
-                <ColorPicker.Palette>
-                    <MaterialHalfColorPalette />
-                </ColorPicker.Palette>
-            </ColorPicker>
+            <TextBlock Margin="20,20,0,0" Text="Secondary color" />
+            <ColorPicker />
         </StackPanel>
     </StackPanel>
 

@@ -35,6 +35,9 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyDataErrorInfo]
     [Required(ErrorMessage =  "This parameter is required")]
     private string? _pathToRunFile;
+    
+    [ObservableProperty]
+    private ObservableDictionary<string, string> _localizedNames = new();
    
     [ObservableProperty]
     [FileExists(requiredNotBeEmpty: false)]
@@ -94,9 +97,14 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             CanCreateDesktopFile = !HasErrors || ForceCreateDesktopFile;
         }
+        
+        ClearLocalization(e.PropertyName);
+        
            
         base.OnPropertyChanged(e);
     }
+
+   
 
     [RelayCommand]
     private async Task ChangeCodePopupVisibilityAsync()
@@ -173,5 +181,16 @@ public partial class MainWindowViewModel : ViewModelBase
             var result = _desktopFileSerializer.Serialize(_desktopFile);
             await Dispatcher.UIThread.InvokeAsync(() => Code = result);
         });
+    }
+    
+    private void ClearLocalization(string? name)
+    {
+        if (name != nameof(EnableLocalization))
+            return;
+        
+        if (!EnableLocalization)
+        {
+            LocalizedNames.Clear(); 
+        }
     }
 }
