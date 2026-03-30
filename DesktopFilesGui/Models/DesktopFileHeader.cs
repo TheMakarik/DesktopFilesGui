@@ -1,7 +1,8 @@
 namespace DesktopFilesGui.Models;
 
-public ref struct DesktopFileHeader
+public sealed class DesktopFileHeader
 {
-    public string IconPath { get; set; }
-    public string Name { get; set; }
+    public required string IconPath { get; set; }
+    public required string Name { get; set; }
+    public required string Path { get; set; }
 }

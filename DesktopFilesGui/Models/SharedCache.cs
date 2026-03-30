@@ -21,6 +21,7 @@ public sealed class SharedCache<T> where T : class
         }
         set
         {
+            
             using (_lock.EnterScope())
             {
                 if (_cache is not null)

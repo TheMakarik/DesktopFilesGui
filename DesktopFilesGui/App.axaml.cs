@@ -55,6 +55,8 @@ public partial class App : Application
             .AddSingleton<IDesktopFileSerializer, DesktopFileSerializer>()
             .AddSingleton<IGithubSourceOpener, GithubSourceOpener>()
             .AddSingleton(Log.Logger)
+            .AddSingleton<IRootRequirer, RootRequirer>()
+            .AddScoped<IDesktopFilesListPresenter, DesktopFilesListPresenter>()
             .AddTransient<IConfigurationJsonCreator, ConfigurationJsonCreator>()
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<MainWindow>();
