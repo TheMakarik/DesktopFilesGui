@@ -7,7 +7,7 @@ using DesktopFilesGui.Models.Enums;
 
 namespace DesktopFilesGui.Converters;
 
-public class DesktopFileTypeToBooleanConverter : MarkupExtension, IValueConverter
+public sealed class DesktopFileTypeToBooleanConverter : MarkupExtension, IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {

@@ -13,7 +13,7 @@ using TextMateSharp.Grammars;
 
 namespace DesktopFilesGui.Views;
 
-public partial class MainWindow : Window
+public sealed partial class MainWindow : Window
 {
     public MainWindow()
     {
@@ -89,7 +89,7 @@ public partial class MainWindow : Window
         themeView.ShowDialog(this);
     }
 
-    private async void OpenDesktopFiles(object? sender, RoutedEventArgs e)
+    private void OpenDesktopFiles(object? sender, RoutedEventArgs e)
     {
         var topLevel = GetTopLevel(this);
 

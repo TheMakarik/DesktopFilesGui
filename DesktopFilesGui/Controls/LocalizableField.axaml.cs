@@ -17,7 +17,7 @@ using Material.Styles.Themes;
 
 namespace DesktopFilesGui.Controls;
 
-public partial class LocalizableField : UserControl
+public sealed partial class LocalizableField : UserControl
 {
     private MaterialThemeBase? _theme;
     private IReadOnlyCollection<string> _countyKeyes = [];

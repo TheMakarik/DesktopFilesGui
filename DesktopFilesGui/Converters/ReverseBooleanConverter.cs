@@ -5,7 +5,7 @@ using Avalonia.Markup.Xaml;
 
 namespace DesktopFilesGui.Converters;
 
-public class ReverseBooleanConverter : MarkupExtension, IValueConverter
+public sealed class ReverseBooleanConverter : MarkupExtension, IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {

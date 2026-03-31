@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace DesktopFilesGui.Views;
 
-public partial class DesktopFileListView : Window
+public sealed partial class DesktopFileListView : Window
 {
     public DesktopFileListView()
     {

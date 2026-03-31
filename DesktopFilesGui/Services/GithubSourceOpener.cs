@@ -4,7 +4,7 @@ using Serilog;
 
 namespace DesktopFilesGui.Services;
 
-public class GithubSourceOpener(ILogger logger) : IGithubSourceOpener
+public sealed class GithubSourceOpener(ILogger logger) : IGithubSourceOpener
 {
     public void Open()
     {

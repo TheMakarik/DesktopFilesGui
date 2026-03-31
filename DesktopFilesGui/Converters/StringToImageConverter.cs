@@ -7,7 +7,7 @@ using Avalonia.Platform;
 
 namespace DesktopFilesGui.Converters;
 
-public class StringToImageConverter : MarkupExtension, IValueConverter
+public sealed class StringToImageConverter : MarkupExtension, IValueConverter
 {
     
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)

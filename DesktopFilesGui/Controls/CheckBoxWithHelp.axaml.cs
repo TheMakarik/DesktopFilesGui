@@ -9,7 +9,7 @@ using Avalonia.Threading;
 
 namespace DesktopFilesGui.Controls;
 
-public partial class CheckBoxWithHelp : UserControl
+public sealed partial class CheckBoxWithHelp : UserControl
 {
     public new static readonly StyledProperty<string> ContentProperty =
         AvaloniaProperty.Register<CheckBoxWithHelp, string>(nameof(Content));

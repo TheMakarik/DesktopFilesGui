@@ -16,7 +16,7 @@ using Serilog;
 
 namespace DesktopFilesGui.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public sealed partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty] private bool _isCodePopupVisible = false;
     

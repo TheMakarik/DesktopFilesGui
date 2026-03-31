@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace DesktopFilesGui.ViewModels;
 
-public partial class StringViewModel : ViewModelBase, INotifyDataErrorInfo
+public sealed partial class StringViewModel : ViewModelBase, INotifyDataErrorInfo
 {
     [ObservableProperty] private string? _value = null;
 

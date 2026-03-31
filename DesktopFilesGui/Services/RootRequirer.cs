@@ -8,7 +8,7 @@ using Serilog;
 
 namespace DesktopFilesGui.Services;
 
-public class RootRequirer(ILogger logger) : IRootRequirer
+public sealed class RootRequirer(ILogger logger) : IRootRequirer
 {
     private const int SUCCESS_EXIT_CODE = 0;
     

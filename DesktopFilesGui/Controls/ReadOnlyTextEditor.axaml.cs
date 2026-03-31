@@ -6,7 +6,7 @@ using TextMateSharp.Grammars;
 
 namespace DesktopFilesGui.Controls;
 
-public partial class ReadOnlyTextEditor : UserControl
+public sealed partial class ReadOnlyTextEditor : UserControl
 {
     public static readonly StyledProperty<bool> ShowLineNumbersProperty = AvaloniaProperty
         .Register<ReadOnlyTextEditor, bool>(nameof(ShowLineNumbers));

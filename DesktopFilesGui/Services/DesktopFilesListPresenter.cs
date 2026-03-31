@@ -10,7 +10,7 @@ using Serilog;
 
 namespace DesktopFilesGui.Services;
 
-public class DesktopFilesListPresenter(ILogger logger, IRootRequirer rootRequirer) : IDesktopFilesListPresenter
+public sealed class DesktopFilesListPresenter(ILogger logger, IRootRequirer rootRequirer) : IDesktopFilesListPresenter
 {
     private const string ICON_START_PATTERN = "Icon=";
     private const string NAME_START_PATTERN = "Name=";

@@ -6,7 +6,7 @@ namespace DesktopFilesGui.Attributes;
 
 [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)]
 [AttributeUsage(AttributeTargets.Property)]
-public class LocalizedDesktopFilePropertyAttribute : Attribute, IDesktopFileBaseAttribute
+public sealed class LocalizedDesktopFilePropertyAttribute : Attribute, IDesktopFileBaseAttribute
 {
     public LocalizedDesktopFilePropertyAttribute(string key, DesktopFileType typeWhenAdd)
     {
