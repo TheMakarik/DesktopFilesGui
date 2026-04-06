@@ -23,7 +23,7 @@ public sealed class ConfigurationJsonCreator(ILogger logger) : IConfigurationJso
         await JsonSerializer.SerializeAsync(
             stream, 
             StaticConfiguration.DEFAULT_CONFIGURATION,
-            ConfigurationSerializerOptions.Default.Options);
+            ConfigurationSerializerContext.Default.Options);
         logger.Information("{path} was created", StaticConfiguration.CONFIGURATION_JSON_PATH);
     }
 }

@@ -1097,4 +1097,8 @@
         <HintPath>..\..\..\.nuget\packages\avalonia.controls.colorpicker\11.3.12\lib\net8.0\Avalonia.Controls.ColorPicker.dll</HintPath>
       </Reference>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="TemplateSelectors\" />
+    </ItemGroup>
 </Project>

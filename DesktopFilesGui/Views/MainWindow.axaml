@@ -105,6 +105,7 @@
                 </StackPanel>
 
                 <StackPanel IsVisible="{Binding SelectedFileType, Converter={converters:EnumToBooleanConverter}, ConverterParameter='{x:Static modelEnums:DesktopFileType.Link}'}" Orientation="Horizontal">
+
                     <icons:MaterialIcon
                         Kind="LinkAdd"
                         Margin="5,0,10,0"

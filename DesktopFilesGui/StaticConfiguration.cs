@@ -18,7 +18,7 @@ public static class StaticConfiguration
     public const string PATH_IN_EXEC_COMMAND = "{PATH}";
     public static readonly string CONFIGURATION_JSON_PATH = $"{APPLICATION_DATA}/config.json";
 
-    public static readonly TemplatesInfo DEFAULT_CONFIGURATION = new()
+    public static readonly Configuration DEFAULT_CONFIGURATION = new()
     {
         ExecutionTemplatesCollection =
         [

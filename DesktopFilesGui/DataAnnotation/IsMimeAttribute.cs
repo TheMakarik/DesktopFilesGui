@@ -17,9 +17,8 @@ public class IsMimeAttribute : ValidationAttribute
 
         if(string.IsNullOrWhiteSpace(mimeType))
             return new ValidationResult("Value is empty");
-        
+
         var result = _mimeTypes.Contains(mimeType);
-        
         return result ? ValidationResult.Success : new ValidationResult("Value is not a supported MIME type");
     }
 }

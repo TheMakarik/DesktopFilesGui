@@ -15,7 +15,7 @@ public sealed class DesktopFilesListPresenter(ILogger logger, IRootRequirer root
     private const string ICON_START_PATTERN = "Icon=";
     private const string NAME_START_PATTERN = "Name=";
     
-    public async Task<IReadOnlyCollection<DesktopFileHeader>> EnumerateDesktopFilesAsync(string path, CancellationTokenSource cancellationTokenSource)
+    public async Task<IReadOnlyCollection<DesktopFileHeader>> GetDesktopFilesAsync(string path, CancellationTokenSource cancellationTokenSource)
     {
         //You don't need return IEnumerable because it may skip exception
         try
@@ -47,7 +47,7 @@ public sealed class DesktopFilesListPresenter(ILogger logger, IRootRequirer root
                     }
 
                     if (icon is null)
-                        logger.Error($"Could not find icon for {Path.GetFileName(file)}");
+                        logger.Warning($"Could not find icon for {Path.GetFileName(file)}");
 
                     if (name is null)
                         logger.Error($"Could not find name for {Path.GetFileName(file)}");
@@ -58,7 +58,6 @@ public sealed class DesktopFilesListPresenter(ILogger logger, IRootRequirer root
                 }).ToListAsync(cancellationTokenSource.Token);
             
             cancellationTokenSource.Token.ThrowIfCancellationRequested();
-            
             return result.AsReadOnly();
         }
         catch (UnauthorizedAccessException)
@@ -73,7 +72,7 @@ public sealed class DesktopFilesListPresenter(ILogger logger, IRootRequirer root
                 logger.Warning($"Access to the desktop files could not be accessed, user cancel the operation");
                 return [];
             }
-            return await EnumerateDesktopFilesAsync(path, cancellationTokenSource);
+            return await GetDesktopFilesAsync(path, cancellationTokenSource);
         }
     }
 
@@ -98,6 +97,7 @@ public sealed class DesktopFilesListPresenter(ILogger logger, IRootRequirer root
 
     private static string CutLineWithTrimming(string line, int length)
     {
-       return line[..length].Trim();
+       line = line[length..].Trim();
+       return line.EndsWith(Environment.NewLine) ? line[..Environment.NewLine.Length] : line;
     }
 }

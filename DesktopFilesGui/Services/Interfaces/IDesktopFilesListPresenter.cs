@@ -7,5 +7,5 @@ namespace DesktopFilesGui.Services.Interfaces;
 
 public interface IDesktopFilesListPresenter
 {
-    public Task<IReadOnlyCollection<DesktopFileHeader>> EnumerateDesktopFilesAsync(string path, CancellationTokenSource cancellationTokenSource);
+    public Task<IReadOnlyCollection<DesktopFileHeader>> GetDesktopFilesAsync(string path, CancellationTokenSource cancellationTokenSource);
 }

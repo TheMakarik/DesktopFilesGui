@@ -4,5 +4,5 @@ using DesktopFilesGui.Models;
 namespace DesktopFilesGui.JsonSerializerOptions;
 
 [JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy =  JsonKnownNamingPolicy.KebabCaseLower)]
-[JsonSerializable(typeof(TemplatesInfo))]
-public sealed partial class ConfigurationSerializerOptions : JsonSerializerContext;
+[JsonSerializable(typeof(Configuration))]
+public sealed partial class ConfigurationSerializerContext : JsonSerializerContext;
